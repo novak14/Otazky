@@ -1,0 +1,50 @@
+.example-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+div.example-radio-button > mat-icon {
+  vertical-align: middle;
+}
+
+.example-radio-button {
+    margin: 5px;
+}
+
+.example-selected-value {
+    margin: 15px 0;
+}
+
+h2 {
+  font-size: 4rem;
+}
+
+.radioAnswer {
+  word-wrap: break-word;
+  font-size: 2.5rem;
+  font-weight: 500;
+  white-space: normal;
+
+}
+
+.answerMessage {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+.wrongAnswer {
+  color: red;
+}
+
+.correctAnswer {
+  color: green;
+}
+
+.mat-icon {
+  height: 31px;
+    width: 31px;
+}
+
+.resultText {
+  font-size: 3.5rem;
+
+}

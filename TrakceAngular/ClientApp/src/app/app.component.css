@@ -4,3 +4,29 @@
     padding-top: 50px;
   }
 }
+
+.login_outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login_inner {
+  padding: 1.5em; 
+}
+
+mat-form-field.mat-form-field {
+  font-size: 5rem;
+  width: 100%;
+}
+
+.mat-raised-button {
+  font-size: 3rem;
+  padding: 1.5rem;
+}
+
+.wrongPass > p {
+  color: red;
+  font-size: 2rem;
+}

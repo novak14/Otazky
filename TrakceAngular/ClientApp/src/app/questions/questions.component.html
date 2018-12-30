@@ -1,0 +1,86 @@
+<p *ngIf="!question && !percentageSuccess"><em>Loading...</em></p>
+
+<div *ngIf="question; else results">
+  <h2>{{ question.question }}</h2>
+  <div class="answerMessage" *ngIf="showAnswerResults">
+    <div *ngIf="choosedAnswer; else wrongAnswer">
+      <p class="correctAnswer">Správná odpověď</p>
+    </div>
+    <ng-template #wrongAnswer>
+      <p class="wrongAnswer">Špatná odpověď</p>
+    </ng-template>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm12">
+      <div *ngIf="!showAnswerResults; else result">
+        <form [formGroup]="answerForm" (ngSubmit)="onSubmitAnswer(question)">
+          <div class="form-group">
+            <mat-radio-group class="example-radio-group" formControlName="chosedAnswer">
+              <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer">
+                <span class="radioAnswer">{{answer.answer}}</span>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <button [disabled]="!answerForm.valid" mat-raised-button color="primary" type="submit">Odeslat odpověď</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #result>
+    <div>
+      <div class="example-radio-group">
+        <div *ngFor="let answer of question.answers">
+          <div *ngIf="answer.isCorrect; else elseBlock" class="example-radio-button">
+            <mat-icon style="color: green">check_circle_outline</mat-icon>
+            <span class="radioAnswer">{{answer.answer}}</span>
+          </div>
+          <ng-template #elseBlock>
+            <div *ngIf="answer.choosed; else wrongAnswerBlock" class="example-radio-button">
+              <mat-icon style="color: red">highlight_off</mat-icon>
+              <span class="radioAnswer">{{answer.answer}}</span>
+            </div>
+            <ng-template #wrongAnswerBlock>
+              <div class="example-radio-button">
+                <mat-icon>radio_button_unchecked</mat-icon>
+                <span class="radioAnswer">{{answer.answer}}</span>
+              </div>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!endTest; else end">
+      <button mat-raised-button color="primary" (click)=nextQuestion()>Další otázka</button>
+    </div>
+    <ng-template #end>
+      <button mat-raised-button color="primary" (click)=nextQuestion()>Konec testu</button>
+
+    </ng-template>
+  </ng-template>
+</div>
+
+<ng-template #results>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div style="display: block">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="resultText">
+        <p>Měl si: {{ correct }} správných odpovědí</p>
+        <p>Měl si: {{ wrong }} špatných odpovědí</p>
+        <p>Měl si: {{ percentageSuccess }}% úspěšnost</p>
+      </div>
+      <div *ngIf="wrongQuestions.length > 0">
+        <button mat-raised-button color="warn" (click)=onlyWrongQuestions()>Znovu špatné odpovědi</button>
+      </div>&nbsp;
+      <div>
+        <button mat-raised-button color="primary" (click)=againTest()>Znovu celý test</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
